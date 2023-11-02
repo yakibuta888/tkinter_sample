@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      shm_size: 1gb
+    volumes:
+      - .:$WORK_DIR:cached
+      - pip-volume:$WORK_DIR/vendor
+      - vscode-extension-volume:$HOME_DIR/.vscode-server/extensions
+    user: $USER_ID:$GROUP_ID
+    entrypoint:
+      - bash
+      - ./.devcontainer/devcontainer-entrypoint.sh
+    ports:
+      - $IP:6080:80
+    command: sleep infinity
+
+volumes:
+  pip-volume:
+  vscode-extension-volume: {}
